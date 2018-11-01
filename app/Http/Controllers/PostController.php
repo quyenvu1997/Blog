@@ -131,6 +131,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        $posttags=PostTag::where('post_id',$id)->get();
+        foreach ($posttags as $posttag) {
+            PostTag::find($posttag->id)->delete();
+        }
         Post::find($id)->delete();
         return response()->json([
             'message'=>'Xoa thanh cong',
